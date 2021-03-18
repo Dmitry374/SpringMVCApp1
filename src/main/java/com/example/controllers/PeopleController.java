@@ -9,8 +9,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/people")
 public class PeopleController {
 
@@ -21,18 +22,24 @@ public class PeopleController {
         this.personDAO = personDAO;
     }
 
+//    @GetMapping()
+//    public String index(Model model) {
+//        // Получим всех людей из DAO и передадим на отображение в представление
+//        model.addAttribute("people", personDAO.index());
+//        return "people/index";
+//    }
+
     @GetMapping()
-    public String index(Model model) {
+    public List<Person> index() {
         // Получим всех людей из DAO и передадим на отображение в представление
-        model.addAttribute("people", personDAO.index());
-        return "people/index";
+        List<Person> list = personDAO.index();
+        return list;
     }
 
     @GetMapping("/{id}")
-    public String show(@PathVariable("id") int id, Model model) {
+    public Person show(@PathVariable("id") int id, Model model) {
         // Получим одного человека по его id из DAO и передадим на отображение в представление
-        model.addAttribute("person", personDAO.show(id));
-        return "people/show";
+        return personDAO.show(id);
     }
 
     /*
